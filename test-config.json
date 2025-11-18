@@ -1,8 +1,0 @@
-{
-  "project": "./src/**/*.{html,ts}",
-  "languages": "./test-lang/*.json",
-  "rules": {
-    "keysOnViews": "error",
-    "zombieKeys": "warning"
-  }
-}
