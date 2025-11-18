@@ -1,0 +1,12 @@
+# Keep bin directory with binaries
+!bin/
+
+# Ignore development files
+.github/
+target/
+src/
+Cargo.toml
+Cargo.lock
+.git
+.gitignore
+.gitattributes
