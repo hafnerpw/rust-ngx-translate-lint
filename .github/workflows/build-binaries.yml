@@ -12,11 +12,11 @@ jobs:
       matrix:
         include:
           # Linux
-          - os: ubuntu-latest
+          - os: ubuntu-20.04
             target: x86_64-unknown-linux-gnu
             artifact_name: ngx-translate-lint-rs
             asset_name: ngx_translate_lint_rs-linux-x64
-          - os: ubuntu-latest
+          - os: ubuntu-20.04
             target: aarch64-unknown-linux-gnu
             artifact_name: ngx-translate-lint-rs
             asset_name: ngx_translate_lint_rs-linux-arm64
