@@ -18,7 +18,13 @@
     "type": "git",
     "url": "https://github.com/hafnerpw/rust-ngx-translate-lint.git"
   },
-  "keywords": ["angular","i18n","translation","lint","ngx-translate"],
+  "keywords": [
+    "angular",
+    "i18n",
+    "translation",
+    "lint",
+    "ngx-translate"
+  ],
   "author": "hafnerpw",
   "license": "MIT",
   "bugs": {
