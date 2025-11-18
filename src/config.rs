@@ -20,9 +20,15 @@ pub fn load_config(path: Option<&Path>) -> Result<LintConfig> {
 }
 
 fn load_json_config(path: &Path) -> Result<LintConfig> {
-    let data = fs::read_to_string(path).with_context(|| format!("Unable to read config: {}", path.display()))?;
+    // Resolve to absolute path first
+    let abs_path = if path.is_absolute() {
+        path.to_path_buf()
+    } else {
+        std::env::current_dir()?.join(path)
+    };
+    let data = fs::read_to_string(&abs_path).with_context(|| format!("Unable to read config: {}", abs_path.display()))?;
     let mut cfg: LintConfig = serde_json::from_str(&data).with_context(|| "Invalid JSON config")?;
-    cfg.base_dir = resolve_base_dir(path);
+    cfg.base_dir = resolve_base_dir(&abs_path);
     Ok(cfg)
 }
 
