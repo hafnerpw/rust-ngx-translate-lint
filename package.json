@@ -1,0 +1,38 @@
+{
+  "name": "rust-ngx-translate-lint",
+  "version": "0.1.0",
+  "description": "High-performance Rust port of ngx-translate-lint - check translation files in Angular/ngx-translate projects",
+  "main": "start.js",
+  "bin": {
+    "ngx-translate-lint": "./start.js"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "node ./pre-install.js",
+    "uninstall": "node ./uninstall.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hafnerpw/rust-ngx-translate-lint.git"
+  },
+  "keywords": ["angular","i18n","translation","lint","ngx-translate"],
+  "author": "hafnerpw",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hafnerpw/rust-ngx-translate-lint/issues"
+  },
+  "homepage": "https://github.com/hafnerpw/rust-ngx-translate-lint",
+  "files": [
+    "pre-install.js",
+    "start.js",
+    "uninstall.js",
+    "README.md",
+    "LICENSE",
+    "Cargo.toml",
+    "Cargo.lock",
+    "src"
+  ]
+}
