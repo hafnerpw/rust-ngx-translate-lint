@@ -1,6 +1,6 @@
 {
   "name": "rust-ngx-translate-lint",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "High-performance Rust port of ngx-translate-lint - check translation files in Angular/ngx-translate projects",
   "main": "start.js",
   "bin": {
