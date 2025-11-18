@@ -62,7 +62,7 @@ fn main() -> Result<()> {
 fn build_cli_config(args: &CliArgs) -> LintConfig {
     let mut cfg = LintConfig::default();
     if let Some(project) = &args.project {
-        cfg.project = project.clone();
+        cfg.views = project.clone();
     }
     if let Some(languages) = &args.languages {
         cfg.languages = languages.clone();

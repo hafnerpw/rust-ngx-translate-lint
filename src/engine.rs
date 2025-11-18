@@ -45,7 +45,7 @@ impl LintEngine {
 
         let keys: Vec<String> = language_map.keys().cloned().collect();
         let view_matchers = build_view_matchers(&self.cfg.rules, &keys)?;
-        let view_files = collect_files(&self.cfg.base_dir, &self.cfg.project, &self.cfg.ignore)?;
+        let view_files = collect_files(&self.cfg.base_dir, &self.cfg.views, &self.cfg.ignore)?;
         debug_status(|| println!("View files: {}", view_files.len()));
         let view_keys = self.scan_views(&view_files, &view_matchers)?;
         debug_status(|| println!("Distinct view keys: {}", view_keys.len()));

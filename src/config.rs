@@ -47,7 +47,7 @@ pub fn merge_config(base: &LintConfig, cli: &LintConfig) -> LintConfig {
     let mut merged = base.clone();
     let default_rules = crate::models::RuleConfig::default();
 
-    if !cli.project.is_empty() { merged.project = cli.project.clone(); }
+    if !cli.views.is_empty() { merged.views = cli.views.clone(); }
     if !cli.languages.is_empty() { merged.languages = cli.languages.clone(); }
     if !cli.ignore.is_empty() { merged.ignore = cli.ignore.clone(); }
     if cli.fix_zombies_keys { merged.fix_zombies_keys = true; }

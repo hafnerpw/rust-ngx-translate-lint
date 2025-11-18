@@ -117,8 +117,9 @@ pub struct FetchConfig {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct LintConfig {
-    #[serde(default)]
-    pub project: String,
+    /// Views path - supports both 'project' (original) and 'views' field names
+    #[serde(default, alias = "project")]
+    pub views: String,
     #[serde(default)]
     pub languages: String,
     #[serde(default)]
@@ -137,7 +138,7 @@ impl Default for LintConfig {
     fn default() -> Self {
         let base_dir = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
         Self {
-            project: "./src/app/**/*.{html,ts,resx}".to_string(),
+            views: "./src/app/**/*.{html,ts,resx}".to_string(),
             languages: "./src/assets/i18n/*.json".to_string(),
             ignore: Vec::new(),
             fix_zombies_keys: false,
