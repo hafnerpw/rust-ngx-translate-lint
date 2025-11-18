@@ -15,7 +15,13 @@ npm install -g rust-ngx-translate-lint
 ### Command Line
 
 ```bash
-ngx-translate-lint -p <project_path> -l <languages_path> -v <views_path>
+rust-ngx-translate-lint --project "./src/app/**/*.{html,ts}" --languages "./src/assets/i18n/*.json"
+```
+
+Or use the short form:
+
+```bash
+rust-ngx-translate-lint -p "./src/app/**/*.{html,ts}" -l "./src/assets/i18n/*.json"
 ```
 
 ### Configuration File
@@ -23,10 +29,10 @@ ngx-translate-lint -p <project_path> -l <languages_path> -v <views_path>
 You can also use a configuration file (JSON or JS):
 
 ```bash
-ngx-translate-lint -c config.json
+rust-ngx-translate-lint --config .ngx-translate-lint.json
 ```
 
-**Example config.json:**
+**Example .ngx-translate-lint.json:**
 
 ```json
 {
@@ -82,64 +88,86 @@ module.exports = {
 
 ### Options
 
-- `-p, --project` - Path to the project
-- `-l, --languages` - Path to directory with translation files (JSON), supports glob patterns
-- `-v, --views` - Path to directory with view files (HTML/TS), supports glob patterns
-- `-c, --config` - Path to configuration file (JSON or JS)
-- `-z, --zombies` - Remove unused translation keys
-- `-m, --misprintCoefficient` - Threshold for detecting potential misprints (default: 0.9)
-- `--maxWarning` - Maximum allowed warnings before exiting with error code
-- `--ignoreKeys` - Comma-separated list of keys to ignore (supports wildcards like `prefix.*`)
-- `--ignoreMisprintKeys` - Comma-separated list of keys to ignore for misprint detection
-- `--deepSearch` - Enable deep search mode (slower but more thorough)
-- `--customRegex` - Custom regex pattern for key extraction
+- `-p, --project` - Path to view files (HTML/TS), supports glob patterns (e.g., `"./src/app/**/*.{html,ts}"`)
+- `-l, --languages` - Path to translation files (JSON), supports glob patterns (e.g., `"./src/assets/i18n/*.json"`)
+- `--config` - Path to configuration file (JSON or JS)
+- `--fix-zombies-keys` - Remove unused translation keys
+- `--max-warning` - Maximum allowed warnings before exiting with error code
+
+### Configuration File Options
+
+- `project` - Path to view files (same as `-p` option)
+- `languages` - Path to translation files (same as `-l` option)
+- `ignore` - Array of paths to ignore
+- `fixZombiesKeys` - Boolean to enable zombie key removal
+- `rules.keysOnViews` - "error" | "warning" | "disable" - Check for missing translations
+- `rules.zombieKeys` - "error" | "warning" | "disable" - Check for unused translations
+- `rules.emptyKeys` - "error" | "warning" | "disable" - Check for empty values
+- `rules.misprintKeys` - "error" | "warning" | "disable" - Check for potential typos
+- `rules.deepSearch` - "enable" | "disable" - Enable deep search mode
+- `rules.maxWarning` - Maximum warnings allowed
+- `rules.misprintCoefficient` - Threshold for misprint detection (0.0-1.0, default: 0.9)
+- `rules.ignoredKeys` - Array of key patterns to ignore (supports wildcards like `"prefix.*"`)
+- `rules.ignoredMisprintKeys` - Array of key patterns to ignore for misprint detection
+- `rules.customRegExpToFindKeys` - Array of custom regex patterns for key extraction
 
 ## Features
 
--  Detects missing translation keys
--  Finds unused translation keys (zombies)
--  Identifies potential typos in translation keys
--  Supports wildcard patterns for ignored keys
--  Supports glob patterns for file paths
--  Configuration file support (JSON/JS)
--  Fast performance thanks to Rust
+- ✅ Detects missing translation keys
+- ✅ Finds unused translation keys (zombies)
+- ✅ Identifies potential typos in translation keys
+- ✅ Supports wildcard patterns for ignored keys
+- ✅ Supports glob patterns for file paths
+- ✅ Configuration file support (JSON/JS)
+- ✅ Compatible with original ngx-translate-lint config format
+- ✅ Fast performance thanks to Rust
+- ✅ Deep search mode for thorough key detection
+
+## npm Integration
+
+Add to your `package.json`:
+
+```json
+{
+  "scripts": {
+    "lint:translations": "rust-ngx-translate-lint --config .ngx-translate-lint.json"
+  },
+  "devDependencies": {
+    "rust-ngx-translate-lint": "^0.1.4"
+  }
+}
+```
+
+Then run:
+
+```bash
+npm run lint:translations
+```
 
 ## Examples
 
 ### Basic Usage
 
 ```bash
-ngx-translate-lint -p ./ -l ./src/assets/i18n -v ./src/app
-```
-
-### With Glob Patterns
-
-```bash
-ngx-translate-lint -l "./src/assets/i18n/*.json" -v "./src/app/**/*.{html,ts}"
+rust-ngx-translate-lint --project "./src/app/**/*.{html,ts}" --languages "./src/assets/i18n/*.json"
 ```
 
 ### With Configuration File
 
 ```bash
-ngx-translate-lint -c ngx-translate-lint.config.json
+rust-ngx-translate-lint --config .ngx-translate-lint.json
 ```
 
 ### Remove Zombie Keys
 
 ```bash
-ngx-translate-lint -p ./ -l ./src/assets/i18n -v ./src/app -z
+rust-ngx-translate-lint --config .ngx-translate-lint.json --fix-zombies-keys
 ```
 
-### Deep Search Mode
+### In npm Scripts
 
 ```bash
-ngx-translate-lint -p ./ -l ./src/assets/i18n -v ./src/app --deepSearch
-```
-
-### Ignore Specific Keys
-
-```bash
-ngx-translate-lint -l "./src/assets/i18n/*.json" -v "./src/app/**/*.ts" --ignoreKeys "library.*,engineering.signal.*"
+npm run lint:translations
 ```
 
 ## License
