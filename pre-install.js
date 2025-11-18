@@ -2,41 +2,35 @@
 
 const fs = require("fs");
 const path = require("path");
-const { exec } = require("child_process");
+const { execSync } = require("child_process");
 const { homedir } = require("os");
 
 const cargoDir = path.join(homedir(), ".cargo");
 
 // check if directory exists
-if (fs.existsSync(cargoDir)) {
-  //   console.log("Cargo found.");
-} else {
-  const setCargo = 'PATH="/$HOME/.cargo/bin:${PATH}"';
-  console.log("Installing deps [cargo].");
-
-  exec(
-    `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && ${setCargo}`,
-    (error) => {
-      if (error) {
-        console.log(
-          "curl failed! Curl may not be installed on the OS. View https://curl.se/download.html to install."
-        );
-        console.log(error);
-      }
-    }
-  );
+if (!fs.existsSync(cargoDir)) {
+  console.error("ERROR: Rust toolchain not found!");
+  console.error("Please install Rust from https://rustup.rs/");
+  process.exit(1);
 }
-    
-const features = process.env.npm_config_features ? `--features ${process.env.npm_config_features.replace(",", " ")}` : ""; 
 
-console.log(`Installing and compiling ngx_translate_lint_rs 0.1.0 ${features} ...`);
-exec(`cargo install ngx_translate_lint_rs --vers 0.1.0 ${features}`, (error, stdout, stderr) => {
-  console.log(stdout);
-  if (error || stderr) {
-    console.log(error || stderr);
-  } else {
-    console.log("install finished!");
-  }
-});
+console.log("Building ngx-translate-lint-rs from source...");
 
-    
+try {
+  // Build in release mode from the package directory
+  execSync("cargo build --release --bin ngx-translate-lint-rs", { 
+    stdio: "inherit",
+    cwd: __dirname 
+  });
+  
+  // Install the binary to cargo bin directory
+  execSync("cargo install --path . --bin ngx-translate-lint-rs", { 
+    stdio: "inherit",
+    cwd: __dirname 
+  });
+  
+  console.log(" Build and installation successful!");
+} catch (error) {
+  console.error(" Build failed:", error.message);
+  process.exit(1);
+}
