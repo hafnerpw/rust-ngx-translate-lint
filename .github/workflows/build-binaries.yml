@@ -61,6 +61,9 @@ jobs:
         env:
           OPENSSL_STATIC: 1
           OPENSSL_VENDORED: 1
+          CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER: aarch64-linux-gnu-gcc
+          CC_aarch64_unknown_linux_gnu: aarch64-linux-gnu-gcc
+          CXX_aarch64_unknown_linux_gnu: aarch64-linux-gnu-g++
         run: cargo build --release --target ${{ matrix.target }}
 
       - name: Rename binary
