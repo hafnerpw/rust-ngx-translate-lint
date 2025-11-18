@@ -2,43 +2,21 @@
 
 const fs = require("fs");
 const path = require("path");
-const { exec } = require("child_process");
-const { homedir } = require("os");
+const os = require("os");
 
-const cargoDir = path.join(homedir(), ".cargo");
+const cargoDir = path.join(os.homedir(), ".cargo", "bin");
+const binaryName = process.platform === "win32" ? "ngx_translate_lint_rs.exe" : "ngx_translate_lint_rs";
+const binaryPath = path.join(cargoDir, binaryName);
 
-// check if directory exists
-if (fs.existsSync(cargoDir)) {
-  //   console.log("Cargo found.");
+if (fs.existsSync(binaryPath)) {
+  try {
+    fs.unlinkSync(binaryPath);
+    console.log("✓ Uninstalled rust-ngx-translate-lint");
+  } catch (error) {
+    console.error(`Failed to uninstall: ${error.message}`);
+  }
 } else {
-  const setCargo = 'PATH="/$HOME/.cargo/bin:${PATH}"';
-  console.log("Installing deps [cargo].");
-
-  exec(
-    `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && ${setCargo}`,
-    (error) => {
-      if (error) {
-        console.log(
-          "curl failed! Curl may not be installed on the OS. View https://curl.se/download.html to install."
-        );
-        console.log(error);
-      }
-    }
-  );
-}
-    
-const binp = path.join(cargoDir, "bin", "ngx_translate_lint_rs");
-
-if (fs.existsSync(binp)) {
-  console.log("Uninstalling ngx_translate_lint_rs...");
-  exec(`cargo uninstall ngx_translate_lint_rs`, (error, stdout, stderr) => {
-    console.log(stdout);
-    if (error || stderr) {
-      console.log(error || stderr);
-    }
-  });
-} else {
-  console.log("ngx_translate_lint_rs not found skipping!");
+  console.log("rust-ngx-translate-lint not found, nothing to uninstall.");
 }
     
     

@@ -8,7 +8,10 @@ A Rust port of [ngx-translate-lint](https://github.com/svoboda-rabstvo/ngx-trans
 npm install -g rust-ngx-translate-lint
 ```
 
-**Requirements:** [Rust toolchain](https://rustup.rs/) must be installed on your system.
+**No dependencies required!** Pre-built binaries are included for:
+- Linux (x64, ARM64)
+- macOS (x64, ARM64/Apple Silicon)
+- Windows (x64)
 
 ## Usage
 
@@ -133,7 +136,7 @@ Add to your `package.json`:
     "lint:translations": "rust-ngx-translate-lint --config .ngx-translate-lint.json"
   },
   "devDependencies": {
-    "rust-ngx-translate-lint": "^0.1.4"
+    "rust-ngx-translate-lint": "^0.1.5"
   }
 }
 ```
