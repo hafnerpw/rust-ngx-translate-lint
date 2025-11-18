@@ -8,7 +8,7 @@ const os = require("os");
 const args = process.argv.slice(2);
 
 // Construct the path to the binary
-const binaryName = os.platform() === "win32" ? "ngx-translate-lint-rs.exe" : "ngx-translate-lint-rs";
+const binaryName = os.platform() === "win32" ? "ngx_translate_lint_rs.exe" : "ngx_translate_lint_rs";
 const binaryPath = path.join(os.homedir(), ".cargo", "bin", binaryName);
 
 // Spawn the Rust binary with arguments (without shell)

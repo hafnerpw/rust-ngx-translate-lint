@@ -24,17 +24,17 @@ function getPlatform() {
 // Install pre-built binary
 function installBinary() {
   const platform = getPlatform();
-  
+
   if (!platform) {
     console.error(`ERROR: Unsupported platform ${os.platform()}-${os.arch()}`);
     console.error("Supported platforms: linux-x64, linux-arm64, darwin-x64, darwin-arm64, win32-x64");
     process.exit(1);
   }
 
-  const binaryName = platform.startsWith("win32") 
-    ? "ngx_translate_lint_rs-win32-x64.exe" 
+  const binaryName = platform.startsWith("win32")
+    ? "ngx_translate_lint_rs-win32-x64.exe"
     : `ngx_translate_lint_rs-${platform}`;
-  
+
   const sourcePath = path.join(__dirname, "bin", binaryName);
   const cargoDir = path.join(os.homedir(), ".cargo", "bin");
   const targetName = platform.startsWith("win32") ? "ngx_translate_lint_rs.exe" : "ngx_translate_lint_rs";

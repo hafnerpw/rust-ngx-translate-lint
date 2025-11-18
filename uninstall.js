@@ -18,5 +18,4 @@ if (fs.existsSync(binaryPath)) {
 } else {
   console.log("rust-ngx-translate-lint not found, nothing to uninstall.");
 }
-    
-    
+
